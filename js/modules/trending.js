@@ -188,24 +188,17 @@ define(['helper'], function () {
                     }
                 }
 
+                //TODO FIX MINIMISE BUG WITH ARRAYS
                 var product = trending.helper.getRandomItem(this.remainingProducts);
                 if(typeof product != 'undefined'){
-                    console.log(product);
                     if(typeof productOld != 'undefined'){
-                        console.log(productOld);
                         if(this.selectedProducts.indexOf(product) == -1){
-                            console.log('1');
                             if(this.remainingProducts.indexOf(product) > -1){
-                                console.log('2');
                                 //once the product is select remove and add to appropriate array
                                 this.selectedProducts.push(product);
-                                console.log('push1 '+product.term);
                                 this.remainingProducts.splice(product, 1);
-                                console.log('splice1 '+product.term);
                                 this.remainingProducts.push(productOld);
-                                console.log('push2 '+productOld.term);
                                 this.selectedProducts.splice(productOld, 1);
-                                console.log('splice2 '+productOld.term);
                                 var image = obj.querySelector('li a img'), title = obj.querySelector('li h3 a'), aTags = obj.querySelectorAll('li a');
                                 image.src = product['product-image-url'];
                                 title.innerHTML = product['term'];
@@ -216,9 +209,6 @@ define(['helper'], function () {
                         }
                     }
                 }
-                console.log(this.selectedProducts.length);
-                console.log(this.remainingProducts.length);
-                console.log('----------------');
                 //set new product
                 this.fadeIn(obj);
             },

@@ -2,26 +2,22 @@
  * Created by Thomas Stapleton on 27/05/14.
  */
 
-var paths = {ajax: 'modules/ajax', helper: 'modules/helper', trending: 'modules/trending'}, modules = [];
+var	paths = {ajax: 'modules/ajax', helper: 'modules/helper', trending: 'modules/trending'}, modules = []; //requireJS configuration
 
+//reset all previously defined paths and their dependencies to point into a single "all" script
 if (requirejs.s.contexts._.config.paths.all) {
     setScriptBuildPaths();
 }
-// initialize
-requirejs.config({
-    paths: paths,
-    shim: shim,
-    config: moduleParams
-});
 
-// build final modules list
+// initialize
+requirejs.config({paths: paths});
+
+//build final modules list
 modules = Object.keys(requirejs.s.contexts._.config.paths);
 
 define(function(){
-
     // load modules
     require(modules, function(){
-
         /*
          * Can set AJAX methods directly in the file and then reset them after using var ajax = require('ajax');
          * Can also use the helper.getData() method to pass in three parameters url, dataType and dummyData (if required)
