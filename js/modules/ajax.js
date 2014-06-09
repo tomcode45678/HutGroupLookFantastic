@@ -6,11 +6,11 @@ define(['ajax'], function () {
 
     var ajax = {
 
-        url: '',
+        url: undefined,
 
-        dataType: '',
+        dataType: undefined,
 
-        dummyData: '',
+        dummyData: undefined,
 
         /**
          * ajax call
@@ -31,33 +31,33 @@ define(['ajax'], function () {
         /**
          *
          * @param url
-         * @param type
+         * @param dataType
+         * @param dummyData
          * @returns string JSON
          */
         gets: function (url, dataType, dummyData) {
             //if the url is not set in the object the url can be set directly within the function
-            url = typeof url !== 'undefined' ? this.url = url : url;
+            this.url = this.url !== undefined ? this.url : url;
             //if the type is not set in the object the type can be set directly within the function
-            dataType = typeof dataType !== 'undefined' ? this.dataType = dataType : dataType;
-            dummyData = typeof dummyData !== 'undefined' ? this.dummyData = dummyData : dummyData;
-            if( ! this.url){
-                return console.log('Error URL not defined.');
+            this.dataType = this.dataType !== undefined ? this.dataType : dataType;
+            this.dummyData = this.dummyData !== undefined ? this.dummyData : dummyData;
+            if(this.url){
+                var call = this.httpType();
+                //microsoft or other request.open get, url
+                call.open('GET', this.url, false);
+                //sending nothing in HTTP request
+                call.send(null);
             }
-            var call = this.httpType();
-            //microsoft or other request.open get, url
-            call.open('GET', this.url, false);
-            //sending nothing in HTTP request
-            call.send(null);
-            var responseText = typeof this.dummyData !== 'undefined' ? this.dummyData : call.responseText;
+            var responseText = this.dummyData !== undefined ? this.dummyData : call.responseText;
             //JSON return
             if(this.dataType.toLowerCase() == "json"){
                 return JSON.parse(responseText);
             }
             //TODO make xmlToJson function in helper and call to return json from xml file
             if(this.dataType.toLowerCase() == "xml"){
-                return responseText;
+                return JSON.parse(responseText);
             }
-            return responseText;
+            return JSON.parse(responseText);
         }
     };
     //return object methods
