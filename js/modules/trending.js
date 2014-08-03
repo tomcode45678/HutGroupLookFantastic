@@ -278,16 +278,12 @@ define(['helper'], function () {
             }
         },
 
+        /**
+         * Start the script
+         */
         initiate: function(){
-            /**
-             * when the dom has loaded
-             */
-            document.onreadystatechange = function() {
-                if (document.readyState === 'complete') {
-                    trending.module.getProducts();
-                    trending.module.getItems();
-                }
-            };
+            trending.module.getProducts();
+            trending.module.getItems();
         }
     };
     //return object methods
