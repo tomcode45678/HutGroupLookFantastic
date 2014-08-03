@@ -285,11 +285,11 @@ define(['helper'], function () {
             document.onreadystatechange = function() {
                 if (document.readyState === 'complete') {
                     trending.module.getProducts();
-                    //trending.module.getItems();
+                    trending.module.getItems();
                 }
             };
         }
-    }
+    };
     //return object methods
     return trending;
 });
