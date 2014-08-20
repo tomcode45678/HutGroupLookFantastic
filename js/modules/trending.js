@@ -31,16 +31,12 @@ define(['helper'], function () {
                 var i = 0, products = trending.helper.getRandomItems('products'), that = this;
                 while(this.selectedProducts.length < parseInt(this.productColumns)){
                     //get random product
-                    (function(){
-                        that.selectedProducts.push(products[i]);
-                    })();
+                    that.selectedProducts.push(products[i]);
                     i++;
                 }
                 //remove added products because splice in while loop does not work
                 while(i != 0){
-                    (function(){
-                        products.splice(products[i], 1);
-                    })();
+                    products.splice(i, 1);
                     i--;
                 }
                 //set remaining products to global var
@@ -60,7 +56,7 @@ define(['helper'], function () {
                 }
                 //remove added terms because splice in while loop does not work
                 while(i != 0){
-                    terms.splice(terms[i], 1);
+                    terms.splice(i, 1);
                     i--;
                 }
                 //set remaining term to global var
@@ -106,9 +102,7 @@ define(['helper'], function () {
                 // this.productTimeout;
                 var that = this;
                 while(i < parseInt(this.productColumns)){
-                    (function(){
-                        that.productTimeout = setTimeout(that.createTimeoutHandler('product', products[i]), (i+0.5) * 2800);
-                    })();
+                    that.productTimeout = setTimeout(that.createTimeoutHandler('product', products[i]), (i+0.5) * 2800);
                     i++;
                 }
             },
@@ -166,47 +160,27 @@ define(['helper'], function () {
              * updates product
              * @param obj
              */
-            updateForceCount: 0,
             updateProduct: function(obj){
                 var productOld, i = 0, that = this;
                 while(this.selectedProducts.length > i){
                     if(obj.querySelector('h3 a').innerHTML == this.selectedProducts[i].term){
-                        (function(){
-                            productOld = that.selectedProducts[i];
-                        })();
+                        productOld = that.selectedProducts[i];
                     }
                     i++;
                 }
 
-                if(typeof productOld == 'undefined'){
-                    if(this.updateForceCount < 1){
-                        this.selectedProducts.push(this.remainingProducts[0]);
-                        this.remainingProducts.splice(this.remainingProducts[0], 1);
-                        this.remainingProducts.push(this.selectedProducts[0]);
-                        this.selectedProducts.splice(this.selectedProducts[0], 1);
-                        productOld = this.remainingProducts[0];
-                    }
-                }
-
-                //TODO FIX MINIMISE BUG WITH ARRAYS
                 var product = trending.helper.getRandomItem(this.remainingProducts);
-                if(typeof product != 'undefined'){
-                    if(typeof productOld != 'undefined'){
-                        if(this.selectedProducts.indexOf(product) == -1){
-                            if(this.remainingProducts.indexOf(product) > -1){
-                                //once the product is select remove and add to appropriate array
-                                this.selectedProducts.push(product);
-                                this.remainingProducts.splice(product, 1);
-                                this.remainingProducts.push(productOld);
-                                this.selectedProducts.splice(productOld, 1);
-                                var image = obj.querySelector('li a img'), title = obj.querySelector('li h3 a'), aTags = obj.querySelectorAll('li a');
-                                image.src = product['product-image-url'];
-                                title.innerHTML = product['term'];
-                                aTags[0].href = aTags[1].href = product['product-url'];
-                                this.updateForceCount = 0;
-
-                            }
-                        }
+                if(typeof product !== 'undefined' && typeof productOld !== 'undefined'){
+                    if(this.selectedProducts.indexOf(product) === - 1 && this.remainingProducts.indexOf(product) > - 1){
+                        //once the product is select remove and add to appropriate array
+                        this.selectedProducts.push(product);
+                        this.remainingProducts.splice(product, 1);
+                        this.remainingProducts.push(productOld);
+                        this.selectedProducts.splice(i, 1);
+                        var image = obj.querySelector('li a img'), title = obj.querySelector('li h3 a'), aTags = obj.querySelectorAll('li a');
+                        image.src = product['product-image-url'];
+                        title.innerHTML = product['term'];
+                        aTags[0].href = aTags[1].href = product['product-url'];
                     }
                 }
                 //set new product
