@@ -36,7 +36,7 @@ define(['helper'], function () {
                 }
                 //remove added products because splice in while loop does not work
                 while(i != 0){
-                    products.splice(i, 1);
+                    products.splice(products[i], 1);
                     i--;
                 }
                 //set remaining products to global var
@@ -56,7 +56,7 @@ define(['helper'], function () {
                 }
                 //remove added terms because splice in while loop does not work
                 while(i != 0){
-                    terms.splice(i, 1);
+                    terms.splice(terms[i], 1);
                     i--;
                 }
                 //set remaining term to global var
@@ -176,7 +176,7 @@ define(['helper'], function () {
                         this.selectedProducts.push(product);
                         this.remainingProducts.splice(product, 1);
                         this.remainingProducts.push(productOld);
-                        this.selectedProducts.splice(i, 1);
+                        this.selectedProducts.splice(productOld[i], 1);
                         var image = obj.querySelector('li a img'), title = obj.querySelector('li h3 a'), aTags = obj.querySelectorAll('li a');
                         image.src = product['product-image-url'];
                         title.innerHTML = product['term'];
